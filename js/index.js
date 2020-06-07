@@ -51,9 +51,19 @@ console.log('NewMax number is: ' + newMax[0]);
 
 /* Start 3.3 */
 
-commonMass[newMin[1]] += commonMass[newMax[1]];
-commonMass[newMax[1]] = commonMass[newMin[1]] - commonMass[newMax[1]];
-commonMass[newMin[1]] -= commonMass[newMax[1]];
+/* For array with only number */
+
+// commonMass[newMin[1]] += commonMass[newMax[1]];
+// commonMass[newMax[1]] = commonMass[newMin[1]] - commonMass[newMax[1]];
+// commonMass[newMin[1]] -= commonMass[newMax[1]];
+
+// console.log('Array of numbers is: ' + commonMass);
+
+/* For any array */
+
+temp = commonMass[newMin[1]];
+commonMass[newMin[1]] = commonMass[newMax[1]];
+commonMass[newMax[1]] = temp;
 
 console.log('Array of numbers is: ' + commonMass);
 
@@ -61,10 +71,22 @@ console.log('Array of numbers is: ' + commonMass);
 
 /* Start 3.4 */
 
+/* For array with only number */
+
+// for (start = 0, end = commonMass.length - 1, halfRange = Math.floor(range / 2); start < halfRange; start++, end--) {
+// 	commonMass[start] += commonMass[end];
+// 	commonMass[end] = commonMass[start] - commonMass[end];
+// 	commonMass[start] -= commonMass[end];
+// }
+
+// console.log('Revers array is: ' + commonMass);
+
+/* For any array */
+
 for (start = 0, end = commonMass.length - 1, halfRange = Math.floor(range / 2); start < halfRange; start++, end--) {
-	commonMass[start] += commonMass[end];
-	commonMass[end] = commonMass[start] - commonMass[end];
-	commonMass[start] -= commonMass[end];
+	temp = commonMass[start];
+	commonMass[start] = commonMass[end];
+	commonMass[end] = temp;
 }
 
 console.log('Revers array is: ' + commonMass);
