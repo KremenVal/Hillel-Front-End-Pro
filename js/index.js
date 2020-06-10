@@ -4,7 +4,7 @@ range = 10;
 massNumbers = new Array(range);
 massPrimes = [];
 
-for (index = min = max = 0, indexPrime = 0; index < range; index++) {
+for (index = indexPrime = 0, min = max = [0, 0]; index < range; index++) {
 	massNumbers[index] = getRandomInt(-50, 50);
 
 	if (isPrime(massNumbers[index])) {
@@ -12,40 +12,50 @@ for (index = min = max = 0, indexPrime = 0; index < range; index++) {
 	}
 
 	if (!index) {
-		min = max = massNumbers[index]
-	} else if (index && massNumbers[index] < min) {
-		min = massNumbers[index];
-	} else if (index && massNumbers[index] > max) {
-		max = massNumbers[index];
+		min = max = [massNumbers[index], index];
+	} else if (index && massNumbers[index] < min[0]) {
+		min = [massNumbers[index], index];
+	} else if (index && massNumbers[index] > max[0]) {
+		max = [massNumbers[index], index];
 	}
 }
 
 console.log('Array of numbers is: ' + massNumbers);
 console.log('Array of primes is: ' + massPrimes);
-console.log('Min number is: ' + min);
-console.log('Max number is: ' + max);
+console.log('Min number is: ' + min[0]);
+console.log('Max number is: ' + max[0]);
 
 /* End 3.1 */
 
 /* Start 3.2 */
 
-commonMass = new Array(range);
+if (min[1] > max[1]) {
+	range = min[1] - max[1];
+	commonMass = new Array(range);
 
-for (i = newMin = newMax = 0; i < range; i++) {
-	commonMass[i] = getRandomInt(min, max);
-
-	if (!i) {
-		newMin = newMax = [commonMass[i], i]
-	} else if (i && commonMass[i] < newMin[0]) {
-		newMin = [commonMass[i], i];
-	} else if (i && commonMass[i] > newMax[0]) {
-		newMax = [commonMass[i], i];
+	for (i = min[1], index = 0; i >= max[1]; i--) {
+		commonMass[index++] = massNumbers[i];
 	}
+
+	min[1] = commonMass.length - 1;
+	max[1] = 0;
+} else {
+	range = max[1] - min[1];
+	commonMass = new Array(max[1] - min[1]);
+
+	for (i = min[1], index = 0; i <= max[1]; i++) {
+		commonMass[index++] = massNumbers[i];
+	}
+
+	max[1] = commonMass.length - 1;
+	min[1] = 0;
 }
 
 console.log('Array of numbers is: ' + commonMass);
-console.log('NewMin number is: ' + newMin[0]);
-console.log('NewMax number is: ' + newMax[0]);
+console.log('Min number is: ' + min[0]);
+console.log('Max number is: ' + max[0]);
+// console.log('NewMin number is: ' + newMin[0]);
+// console.log('NewMax number is: ' + newMax[0]);
 
 /* End 3.2 */
 
@@ -53,19 +63,19 @@ console.log('NewMax number is: ' + newMax[0]);
 
 /* For array with only number */
 
-// commonMass[newMin[1]] += commonMass[newMax[1]];
-// commonMass[newMax[1]] = commonMass[newMin[1]] - commonMass[newMax[1]];
-// commonMass[newMin[1]] -= commonMass[newMax[1]];
+// commonMass[min[1]] += commonMass[max[1]];
+// commonMass[max[1]] = commonMass[min[1]] - commonMass[max[1]];
+// commonMass[min[1]] -= commonMass[max[1]];
 
 // console.log('Array of numbers is: ' + commonMass);
 
 /* For any array */
 
-temp = commonMass[newMin[1]];
-commonMass[newMin[1]] = commonMass[newMax[1]];
-commonMass[newMax[1]] = temp;
+// temp = commonMass[min[1]];
+// commonMass[min[1]] = commonMass[max[1]];
+// commonMass[max[1]] = temp;
 
-console.log('Array of numbers is: ' + commonMass);
+// console.log('Array of numbers is: ' + commonMass);
 
 /* End 3.3 */
 
@@ -73,7 +83,7 @@ console.log('Array of numbers is: ' + commonMass);
 
 /* For array with only number */
 
-// for (start = 0, end = commonMass.length - 1, halfRange = Math.floor(range / 2); start < halfRange; start++, end--) {
+// for (start = 0, end = commonMass.length - 1, halfRange = (range > 2 ? Math.floor(range / 2) : 1); start < halfRange; start++, end--) {
 // 	commonMass[start] += commonMass[end];
 // 	commonMass[end] = commonMass[start] - commonMass[end];
 // 	commonMass[start] -= commonMass[end];
@@ -83,13 +93,13 @@ console.log('Array of numbers is: ' + commonMass);
 
 /* For any array */
 
-for (start = 0, end = commonMass.length - 1, halfRange = Math.floor(range / 2); start < halfRange; start++, end--) {
-	temp = commonMass[start];
-	commonMass[start] = commonMass[end];
-	commonMass[end] = temp;
-}
+// for (start = 0, end = commonMass.length - 1, halfRange = (range > 2 ? Math.floor(range / 2) : 1); start < halfRange; start++, end--) {
+// 	temp = commonMass[start];
+// 	commonMass[start] = commonMass[end];
+// 	commonMass[end] = temp;
+// }
 
-console.log('Revers array is: ' + commonMass);
+// console.log('Revers array is: ' + commonMass);
 
 
 /* End 3.4 */
