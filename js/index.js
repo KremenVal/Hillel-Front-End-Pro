@@ -1,127 +1,99 @@
-/* Start 3.1 */
+/* Start 4.1.1 */
+
+range = 3;
+
+mass = getIntegerArray(range);
+console.log('Array befor loop: ' + mass);
+
+for (i = 0, loopRange = (range % 2 ? range - 1 : range); i < loopRange; i += 2) {
+	temp = mass[i];
+	mass[i] = mass[i + 1];
+	mass[i + 1] = temp;
+}
+
+console.log('Array after loop: ' + mass);
+console.log('------------------');
+
+/* End 4.1.1 */
+
+/* Start 4.1.2 */
 
 range = 10;
-massNumbers = new Array(range);
-massPrimes = [];
 
-for (index = indexPrime = 0, min = max = [0, 0]; index < range; index++) {
-	massNumbers[index] = getRandomInt(-50, 50);
+mass = getIntegerArray(range);
+average = Math.round(mass.reduce(function(firstNumber, secondNumber) {
+	return firstNumber + secondNumber;
+}) / range);
 
-	if (isPrime(massNumbers[index])) {
-		massPrimes[indexPrime++] = massNumbers[index];
-	}
+console.log('Array: ' + mass);
+console.log('Average: ' + average);
 
-	if (!index) {
-		min = max = [massNumbers[index], index];
-	} else if (index && massNumbers[index] < min[0]) {
-		min = [massNumbers[index], index];
-	} else if (index && massNumbers[index] > max[0]) {
-		max = [massNumbers[index], index];
+for (i = 0; i < range; i++) {
+	if (mass[i] > average) {
+		console.log(mass[i]);
 	}
 }
 
-console.log('Array of numbers is: ' + massNumbers);
-console.log('Array of primes is: ' + massPrimes);
-console.log('Min number is: ' + min[0]);
-console.log('Max number is: ' + max[0]);
+console.log('------------------');
 
-/* End 3.1 */
+/* End 4.1.2 */
 
-/* Start 3.2 */
+/* Start 4.1.3 */
 
-if (min[1] > max[1]) {
-	range = min[1] - max[1];
-	commonMass = new Array(range);
+a = getNumberFromUser('A');
+b = getNumberFromUser('B');
 
-	for (i = min[1], index = 0; i >= max[1]; i--) {
-		commonMass[index++] = massNumbers[i];
-	}
-
-	min[1] = commonMass.length - 1;
-	max[1] = 0;
-} else {
-	range = max[1] - min[1];
-	commonMass = new Array(max[1] - min[1]);
-
-	for (i = min[1], index = 0; i <= max[1]; i++) {
-		commonMass[index++] = massNumbers[i];
-	}
-
-	max[1] = commonMass.length - 1;
-	min[1] = 0;
+if (a > b) {
+	a += b;
+	b = a - b;
+	a -= b;
 }
 
-console.log('Array of numbers is: ' + commonMass);
-console.log('Min number is: ' + min[0]);
-console.log('Max number is: ' + max[0]);
-// console.log('NewMin number is: ' + newMin[0]);
-// console.log('NewMax number is: ' + newMax[0]);
+console.log(a, b);
 
-/* End 3.2 */
-
-/* Start 3.3 */
-
-/* For array with only number */
-
-// commonMass[min[1]] += commonMass[max[1]];
-// commonMass[max[1]] = commonMass[min[1]] - commonMass[max[1]];
-// commonMass[min[1]] -= commonMass[max[1]];
-
-// console.log('Array of numbers is: ' + commonMass);
-
-/* For any array */
-
-// temp = commonMass[min[1]];
-// commonMass[min[1]] = commonMass[max[1]];
-// commonMass[max[1]] = temp;
-
-// console.log('Array of numbers is: ' + commonMass);
-
-/* End 3.3 */
-
-/* Start 3.4 */
-
-/* For array with only number */
-
-// for (start = 0, end = commonMass.length - 1, halfRange = (range > 2 ? Math.floor(range / 2) : 1); start < halfRange; start++, end--) {
-// 	commonMass[start] += commonMass[end];
-// 	commonMass[end] = commonMass[start] - commonMass[end];
-// 	commonMass[start] -= commonMass[end];
-// }
-
-// console.log('Revers array is: ' + commonMass);
-
-/* For any array */
-
-// for (start = 0, end = commonMass.length - 1, halfRange = (range > 2 ? Math.floor(range / 2) : 1); start < halfRange; start++, end--) {
-// 	temp = commonMass[start];
-// 	commonMass[start] = commonMass[end];
-// 	commonMass[end] = temp;
-// }
-
-// console.log('Revers array is: ' + commonMass);
-
-
-/* End 3.4 */
-
-function getRandomInt(min, max) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min)) + min;
+for (i = 0; i < mass.length; i++) {
+	if (mass[i] >= a && mass[i] <= b) {
+		console.log('Index: ' + i);
+	}
 }
 
-function isPrime(primeNumber) {
-	if (primeNumber == 2) {
-		return true;
-	} else if (primeNumber < 2 || primeNumber % 2 === 0) {
-		return false;
-	}
+/* End 4.1.3 */
 
-	for (i = 3, sqrt = Math.sqrt(primeNumber); i <= sqrt; i += 2) {
-		if (primeNumber % i === 0) {
-			return false;
+/* Start 4.1.4 */
+
+console.log('Array befor loop: ' + mass);
+
+for (i = 0; i < mass.length - 1; i++) {
+	for (j = i + 1; j < mass.length; j++) {
+		if (mass[i] == mass[j]) {
+			mass.splice(j--, 1);
 		}
 	}
-
-	return true;
 }
+
+console.log('Array after loop: ' + mass);
+console.log('------------------');
+
+copyMass = getIntegerArray(range);
+console.log('Array befor loop: ' + copyMass);
+
+for (i = 0, tempMass = []; i < copyMass.length; i++) {
+	if (tempMass.indexOf(copyMass[i]) == -1) {
+		tempMass.push(copyMass[i]);
+	}
+}
+
+copyMass = tempMass;
+
+console.log('Array after loop: ' + copyMass);
+console.log('------------------');
+
+/* End 4.1.4 */
+
+/* Start 4.2 */
+
+mass = compareArray([1, 2, 3, 'hello', 4, 5], [1, 2, 3, true, 4, undefined, 6]);
+
+console.log(mass);
+
+/* End 4.2 */
