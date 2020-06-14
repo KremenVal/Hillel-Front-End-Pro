@@ -43,3 +43,13 @@ function minArray(mass = []) {
 
 	return min;
 }
+
+function copyArray(mass = [], func) {
+	var returnArray = [];
+
+	for (var i = 0; i < mass.length; i++) {
+		returnArray.push(mass[i]);
+	}
+
+	return returnArray;
+}
