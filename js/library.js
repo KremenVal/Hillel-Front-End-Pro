@@ -26,7 +26,7 @@ function getNumberFromUser(nameVariable) {
 
 function maxArray(mass = []) {
 	for (var i = max = 0; i < mass.length; i++) {
-		if (max <= mass[i]) {
+		if (Number.isInteger(mass[i]) && max <= mass[i]) {
 			max = mass[i];
 		}
 	}
@@ -36,7 +36,7 @@ function maxArray(mass = []) {
 
 function minArray(mass = []) {
 	for (var i = min = 0; i < mass.length; i++) {
-		if (min >= mass[i]) {
+		if (Number.isInteger(mass[i]) && min >= mass[i]) {
 			min = mass[i];
 		}
 	}
