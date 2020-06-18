@@ -25,7 +25,9 @@ array = ["1234hello", "hellohd;lfmg", "45yu89egrhellowegojih", "dfhghello", ",bn
 kek = array.map(function(item) {
 	return item.indexOf(match);
 })
-.filter(item => item > -1)
+.filter(function(item) {
+	return item > -1;
+})
 .join(', ');
 
 console.log(kek);
