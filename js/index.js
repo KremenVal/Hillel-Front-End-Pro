@@ -1,35 +1,83 @@
-/* Start 6.1 */
+/* Start 7.1 */
 
-// function f(a = 2, b = 3, c) {
-// 	return (typeof c === 'function' ? c(sum(a, b)) : sum(a, b));
+let obj = {
+	x: 10,
+	y: 20,
+	inner: {
+		x: 20,
+		z: 30
+	},
+	foo2: {
+		k: 23,
+		p: 13
+	}
+}
 
-// 	function sum(a, b) {
-// 		return a + b;
-// 	}
-// }
+let newObj1 = convert(obj);
+console.log(newObj1);
 
-// console.log(f(5, 5, 'kek'));
+function convert(obj) {
+	if (typeof obj !== 'object') {
+		return {};
+	}
 
-// console.log(f(5, 5, function(a) {
-// 	return Math.pow(a, 2);
-// }));
+	let newObj = {};
 
-/* End 6.1 */
+	concatObject(newObj, obj);
+	
+	return newObj;
+}
 
-/* Start 6.2 */
+/* End 7.1 */
 
-match = "hello";
+/* Start 7.2 and 7.3 */
 
-array = ["1234hello", "hellohd;lfmg", "45yu89egrhellowegojih", "dfhghello", ",bnsdklb"];
+let newObj2 = assignObjects(
+		{
+			x: 10,
+			y: 20 
+		},
+		{
+			z: 30
+		}
+	),
+	newObj3 = assignObjects(
+		{
+			x: 10
+		},
+		{
+			x: 20,
+			y: 30
+		}
+	);
 
-kek = array.map(function(item) {
-	return item.indexOf(match);
-})
-.filter(function(item) {
-	return item > -1;
-})
-.join(', ');
+console.log(newObj2);
+console.log(newObj3);
 
-console.log(kek);
+function assignObjects() {
+	let newObj = {};
 
-/* End 6.2 */
+	for (let i = 0; i < arguments.length; i++) {
+		if (typeof arguments[i] !== 'object') {
+			continue;
+		} else {
+			concatObject(newObj, arguments[i]);
+		}
+	}
+
+	return newObj;
+};
+
+/* End 7.2 and 7.3 */
+
+function concatObject(newObj, obj) {
+	for (let i in obj) {
+		if (typeof obj[i] === 'object') {
+			for (let j in obj[i]) {
+				newObj[j] = obj[i][j];
+			}
+		} else {
+			newObj[i] = obj[i];
+		}
+	}
+}
