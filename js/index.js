@@ -9,7 +9,10 @@ let obj = {
 	},
 	foo2: {
 		k: 23,
-		p: 13
+		p: 13,
+		foo: {
+			p: 100
+		}
 	}
 }
 
@@ -73,9 +76,7 @@ function assignObjects() {
 function concatObject(newObj, obj) {
 	for (let i in obj) {
 		if (typeof obj[i] === 'object') {
-			for (let j in obj[i]) {
-				newObj[j] = obj[i][j];
-			}
+			concatObject(newObj, obj[i]);
 		} else {
 			newObj[i] = obj[i];
 		}
