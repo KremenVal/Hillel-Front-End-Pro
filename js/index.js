@@ -1,84 +1,64 @@
 /* Start 7.1 */
 
-let obj = {
-	x: 10,
-	y: 20,
-	inner: {
-		x: 20,
-		z: 30
-	},
-	foo2: {
-		k: 23,
-		p: 13,
-		foo: {
-			p: 100
+let people = [],
+	samePeople = [],
+	names = ['Max', 'Max', 'Denis', 'Max', 'Alex', 'Denis'],
+	oldestPerson = {},
+	averageAge = closestAverage = summAge = 0;
+
+for (let i = 0; i < names.length; i++) {		/* Creating new array which include objects of people and finding the oldes person */
+	people.push(getPerson(names[i], getRandomInt(1, 50), getRandomInt(51, 110)));
+
+	summAge += people[i].getAge(); 
+
+	if (!i) {
+		oldestPerson = people[i];
+	} else if (oldestPerson.getAge() < people[i].getAge()) {
+		oldestPerson = people[i];
+	}
+}
+
+closestAverage = Math.abs(summAge / people.length - oldestPerson.getAge());
+
+for (let i = currentClosestAverage = 0; i < people.length; i++) {		/* Finding closest age to average age */
+	currentClosestAverage = Math.abs(summAge / people.length - people[i].getAge());
+
+	if (currentClosestAverage < closestAverage) {
+		closestAverage = currentClosestAverage;
+		averageAge = people[i].getAge();
+	}
+}
+
+copyPeople = copyArray(people);
+
+for (let i = 0; i < copyPeople.length - 1; i++) {			/* Finding people with the same name */
+	for (let j = i + 1, count = 0; j < copyPeople.length; j++) {
+		if (copyPeople[j].getName() === copyPeople[i].getName() && !count++) {
+			samePeople.push(copyPeople[i], copyPeople[j]);
+			copyPeople.splice(j, 1);
+		} else if (copyPeople[j].getName() === copyPeople[i].getName()) {
+			samePeople.push(copyPeople[j]);
+			copyPeople.splice(j, 1);
 		}
 	}
 }
 
-let newObj1 = convert(obj);
-console.log(newObj1);
-
-function convert(obj) {
-	if (typeof obj !== 'object') {
-		return {};
-	}
-
-	let newObj = {};
-
-	concatObject(newObj, obj);
-	
-	return newObj;
-}
+console.log(people);
+console.log('Average age is: ' + averageAge);
+console.log(oldestPerson);
+console.log(samePeople);
 
 /* End 7.1 */
 
-/* Start 7.2 and 7.3 */
-
-let newObj2 = assignObjects(
-		{
-			x: 10,
-			y: 20 
+function getPerson(name = 'Anton', from = 1, to = 110) {
+	return {
+		name: name,
+		age: getRandomInt(from, to),
+		getName() {
+			return this.name;
 		},
-		{
-			z: 30
-		}
-	),
-	newObj3 = assignObjects(
-		{
-			x: 10
-		},
-		{
-			x: 20,
-			y: 30
-		}
-	);
-
-console.log(newObj2);
-console.log(newObj3);
-
-function assignObjects() {
-	let newObj = {};
-
-	for (let i = 0; i < arguments.length; i++) {
-		if (typeof arguments[i] !== 'object') {
-			continue;
-		} else {
-			concatObject(newObj, arguments[i]);
-		}
-	}
-
-	return newObj;
-};
-
-/* End 7.2 and 7.3 */
-
-function concatObject(newObj, obj) {
-	for (let i in obj) {
-		if (typeof obj[i] === 'object') {
-			concatObject(newObj, obj[i]);
-		} else {
-			newObj[i] = obj[i];
+		getAge() {
+			return this.age;
 		}
 	}
 }
