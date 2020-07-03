@@ -1,64 +1,75 @@
-/* Start 7.1 */
+/* Start 9.1 */
 
-let people = [],
-	samePeople = [],
-	names = ['Max', 'Max', 'Denis', 'Max', 'Alex', 'Denis'],
-	oldestPerson = {},
-	averageAge = closestAverage = summAge = 0;
+mathOper = {
+	x: 12,
+	y: 3,
+	sign: '/'
+};
 
-for (let i = 0; i < names.length; i++) {		/* Creating new array which include objects of people and finding the oldes person */
-	people.push(getPerson(names[i], getRandomInt(1, 50), getRandomInt(51, 110)));
+function SuperMath() {
+};
 
-	summAge += people[i].getAge(); 
+SuperMath.prototype.input = function(msg, obj) {
+	alert(msg);
+	obj.x = prompt('Enter X:', 5);
+	obj.y = prompt('Enter Y:', 5);
+	obj.sign = prompt('Enter Sign:', '+');
+};
 
-	if (!i) {
-		oldestPerson = people[i];
-	} else if (oldestPerson.getAge() < people[i].getAge()) {
-		oldestPerson = people[i];
-	}
-}
+SuperMath.prototype.checkData = function(obj) {
+	let msg = 'flag';
 
-closestAverage = Math.abs(summAge / people.length - oldestPerson.getAge());
-
-for (let i = currentClosestAverage = 0; i < people.length; i++) {		/* Finding closest age to average age */
-	currentClosestAverage = Math.abs(summAge / people.length - people[i].getAge());
-
-	if (currentClosestAverage < closestAverage) {
-		closestAverage = currentClosestAverage;
-		averageAge = people[i].getAge();
-	}
-}
-
-copyPeople = copyArray(people);
-
-for (let i = 0; i < copyPeople.length - 1; i++) {			/* Finding people with the same name */
-	for (let j = i + 1, count = 0; j < copyPeople.length; j++) {
-		if (copyPeople[j].getName() === copyPeople[i].getName() && !count++) {
-			samePeople.push(copyPeople[i], copyPeople[j]);
-			copyPeople.splice(j, 1);
-		} else if (copyPeople[j].getName() === copyPeople[i].getName()) {
-			samePeople.push(copyPeople[j]);
-			copyPeople.splice(j, 1);
+	while (msg != '') {
+		if (isNaN(obj.x = parseInt(obj.x))) {
+			msg = 'X must be a number! ';
+		} else if (isNaN(obj.y = parseInt(obj.y))) {
+			msg = 'Y must be a number! ';
+		} else if (['+', '-', '/', '%', '*'].indexOf(obj.sign) == -1) {
+			msg = 'You need wrtie correct math operation! ';
+		} else if ((obj.sign == '/' || obj.sign == '%') && !obj.y) {
+			msg = 'Cannot divide by zero!\n' + `${obj.x + obj.sign + obj.y}\n`;
+		} else {
+			msg = '';
+		}
+	
+		if (msg != '') {
+			this.input(msg + 'Write new data.', obj);
 		}
 	}
 }
 
-console.log(people);
-console.log('Average age is: ' + averageAge);
-console.log(oldestPerson);
-console.log(samePeople);
-
-/* End 7.1 */
-
-function getPerson(name = 'Anton', from = 1, to = 110) {
-	return {
-		name: name,
-		age: getRandomInt(from, to),
-		getName() {
-			return this.name;
-		},
-		getAge() {
-			return this.age;
-		}
+SuperMath.prototype.mathOperation = function(x, y, sign) {
+	if (sign == '+') {
+		return x + y;
+	} else if (sign == '-') {
+		return x - y;
+	} else if (sign == '/') {
+		return x / y;
+	} else if (sign == '%') {
+		return x % y;
+	} else {
+		return x * y;
 	}
 }
+
+SuperMath.prototype.check = function(obj) {
+	this.checkData(obj);
+	answer = prompt('Are you sure you want to perform this math operation? Write yes if you want to continue or no to change data.\n' + obj.x + obj.sign + obj.y, 'Yes');
+
+	while(answer.toLowerCase() != 'yes' && answer.toLowerCase() != 'no') {
+		answer = prompt('Write yes if you want to continue or no to change data.\n' + obj.x + obj.sign + obj.y, 'Yes');
+	}
+	
+	if (answer.toLowerCase() == 'yes') {
+		console.log(this.mathOperation(obj.x, obj.y, obj.sign));
+	} else {
+		this.input('Write new data.', obj);
+		this.check(obj);
+	}
+};
+
+
+p = new SuperMath();
+p.check(mathOper);
+
+/* End 9.1 */
