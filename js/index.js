@@ -9,14 +9,14 @@ mathOper = {
 function SuperMath() {
 };
 
-SuperMath.prototype.input = function(msg, obj) {
+SuperMath.prototype.input = function(msg, obj) {		/* Asking for a new parametrs */
 	alert(msg);
 	obj.x = prompt('Enter X:', 5);
 	obj.y = prompt('Enter Y:', 5);
 	obj.sign = prompt('Enter Sign:', '+');
 };
 
-SuperMath.prototype.checkData = function(obj) {
+SuperMath.prototype.checkData = function(obj) {			/* Cheking for a valid parametrs */
 	let msg = 'flag';
 
 	while (msg != '') {
@@ -38,7 +38,7 @@ SuperMath.prototype.checkData = function(obj) {
 	}
 }
 
-SuperMath.prototype.mathOperation = function(x, y, sign) {
+SuperMath.prototype.mathOperation = function(x, y, sign) {		/* Performing math operations */
 	if (sign == '+') {
 		return x + y;
 	} else if (sign == '-') {
@@ -54,6 +54,7 @@ SuperMath.prototype.mathOperation = function(x, y, sign) {
 
 SuperMath.prototype.check = function(obj) {
 	this.checkData(obj);
+	
 	answer = prompt('Are you sure you want to perform this math operation? Write yes if you want to continue or no to change data.\n' + obj.x + obj.sign + obj.y, 'Yes');
 
 	while(answer.toLowerCase() != 'yes' && answer.toLowerCase() != 'no') {
