@@ -1,83 +1,42 @@
-/* Start 11.1 */
+/* Start 10.1 */
 
-let box = document.querySelector('.box'),
-	bams = document.querySelector('.bams'),
-	monitorParams = document.documentElement,
-	horizontalMovement = 0,
-	vertiaclMovement = 0
-	step = getStep('step');
+let lastLi = document.querySelectorAll('li:last-of-type');
 
+for (let li of lastLi) {
+	setTimeout(function() {
+		li.classList.add('last');
+	}, 2000);
+}
 
-window.onkeydown = function(event) {
-	if (!box.classList.contains('animation')) {
-		if (event.keyCode === 37) {							/* Moving left */
-			box.style.left = (horizontalMovement -= step + (box.getBoundingClientRect().left
-				- Math.floor(box.getBoundingClientRect().left))) + 'px';
-			
-			if (box.getBoundingClientRect().left < 1) {
-				box.style.left = (horizontalMovement -= box.getBoundingClientRect().left) + 'px';
-				
-				setEffects('left', 'horizontalMovement', '+');
-			}
-		} else if (event.keyCode === 38) {					/* Moving top */
-			box.style.top = (vertiaclMovement -= step + (box.getBoundingClientRect().top
-				- Math.floor(box.getBoundingClientRect().top))) + 'px';
-			
-			if (box.getBoundingClientRect().top < 1) {
-				box.style.top = (vertiaclMovement -= box.getBoundingClientRect().top) + 'px';
+/* Сделал 2 варианта, т.к. немного не понял какой из них подходит) */
 
-				setEffects('top', 'vertiaclMovement', '+');
-			}
-		} else if (event.keyCode === 39) {					/* Moving right */
-			box.style.left = (horizontalMovement += step + (box.getBoundingClientRect().right
-				- Math.floor(box.getBoundingClientRect().right))) + 'px';
+function setFirstItemClassName(level = 1) {
+	if (level < 1 || level > 3) {
+		return false;
+	} else {
+		let patern = 'document.querySelector(\'.root\')' + '.children[0]'.repeat(level) + '.classList.add(\'first-item\')';
 
-			if (box.getBoundingClientRect().right > monitorParams.clientWidth - 1) {
-				box.style.left = (horizontalMovement += monitorParams.clientWidth
-					- box.getBoundingClientRect().right) + 'px';
-
-				setEffects('left', 'horizontalMovement', '-');
-			}
-		} else if (event.keyCode === 40) {					/* Moving bottom */
-			box.style.top = (vertiaclMovement += step) + 'px';
-
-			if (box.getBoundingClientRect().bottom > monitorParams.clientHeight - 1) {
-				box.style.top = (vertiaclMovement += monitorParams.clientHeight
-					- box.getBoundingClientRect().bottom - 0.5) + 'px';
-
-				setEffects('top', 'vertiaclMovement', '-');
-			}
-		
-		}
+		setTimeout(function() {
+			eval(patern);
+		}, 2000);
 	}
 }
 
-function setEffects(position, movement, sign) {
-	setTimeout(function(){
-		bams.style.opacity = 1;
-		bams.classList.add('animation-text');
-		box.classList.add('animation');
-		
-		setTimeout(function() {
-			eval(`box.style.${position} = (${movement} ${sign}= ${step} * 2) + 'px'`);
-		}, 100);
+// function setFirstItemClassName(level = 1) {
+// 	if (level < 1 || level > 3) {
+// 		return false;
+// 	} else {
+// 		for (let i = 0, children = document.querySelector('.root').children.length; i < children; i++) {
+// 			let patern = 'document.querySelector(\'.root\')' + `.children[${i}]` + '.children[0]'.repeat(level - 1)
+// 							+ '.classList.add(\'first-item\')';
+//
+// 			setTimeout(function() {
+// 				eval(patern);
+// 			}, 2000);
+// 		}
+// 	}
+// }
 
-		setTimeout(function() {
-			bams.style.opacity = 0;
-			bams.classList.remove('animation-text');
-			box.classList.remove('animation');
-		}, 1000);
-	});
-}
+setFirstItemClassName(2);
 
-function getStep(nameVariable) {
-	let variable = prompt('Enter a number for the ' + nameVariable + ':', 5);
-
-	while (!isNumber(variable) || parseInt(variable) < 1 || parseInt(variable) > monitorParams.clientHeight / 3) {
-		variable = prompt(`You entered no number or number less than 1 or bigger than ${monitorParams.clientHeight / 3}. Need to enter a valid number for ` + nameVariable, 5);
-	}
-
-	return parseInt(variable);
-}
-
-/* End 11.1 */
+/* End 10.1 */
