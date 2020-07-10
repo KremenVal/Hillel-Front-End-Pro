@@ -1,7 +1,62 @@
-.last {
-    background-color: green;
+* {
+	box-sizing: border-box;
 }
 
-.first-item {
-    background-color: red;
+body {
+	margin: 0px;
+}
+
+.arena {
+	align-items: center;
+	justify-content: center;
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+}
+
+.box {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	height: 50px;
+	width: 150px;
+	border: 2px solid rgb(0, 0, 0);
+}
+
+.bams {
+	opacity: 0;
+	font-size: 32px;
+	color: red;
+	transition: all 0.5s ease 0s;
+}
+
+.animation-text {
+	animation: .35s linear infinite transformSize;
+}
+
+.animation-box {
+	animation: .35s linear infinite transformBox;
+}
+
+@keyframes transformSize {
+	from {
+		font-size: 32px;
+	}
+
+	to {
+		font-size: 37px;
+	}
+}
+
+@keyframes transformBox {
+	from {
+		height: 50px;
+		width: 150px;
+	}
+
+	to {
+		height: 55px;
+		width: 155px;
+	}
 }
