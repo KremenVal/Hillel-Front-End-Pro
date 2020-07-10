@@ -65,7 +65,7 @@ function setEffects(position, movement, sign) {
 			bams.style.opacity = 0;
 			bams.classList.remove('animation-text');
 			box.classList.remove('animation-box');
-		}, 1000);
+		}, 2000);
 	});
 }
 
