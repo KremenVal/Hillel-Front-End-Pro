@@ -1,42 +1,54 @@
-/* Start 13.1 */
+/* Start 14.1 */
 
-let tr = Array.from(document.querySelectorAll('tr')),
-	arrayObjects = [],
-	summOfPrices = 0;
+let employee = {
+}
+
+Object.defineProperty(employee, 'getFirstName', {
+	value: function() {
+		if (!this.firstName) {
+			this.firstName = prompt('Please, enter the first name: ', 'Max');
+		}
 	
-tr.reduce((mass, node) => {
-	let td =  Array.from(node.querySelectorAll('td'));
+		return this.firstName;
+	},
+});
+
+
+Object.defineProperty(employee, 'getLastName', {
+	value: function() {
+		if (!this.lastName) {
+			this.lastName = prompt('Please, enter the last  name: ', 'Trant');
+		};
 	
-	mass.push({
-		name: td[0].textContent,
-		price: td[1].textContent
-	});
+		return this.lastName;
+	},
+});
 
-	return mass;
-}, arrayObjects);
+Object.defineProperty(employee, 'getUser', {
+	value: function() {
+		return this.getFirstName() + " " + this.getLastName();
+	},
+	writable: true,
+});
 
-console.dir(arrayObjects);
+Object.defineProperty(employee, 'renderUser', {
+	value: function() {
+		let ul = document.createElement('ul');
 
-/* End 13.1 */
+		for (let key in this) {
+			let li = document.createElement('li');
 
-/* Start 13.2 */
+			li.innerText = this[key];
+			ul.appendChild(li);
+		}
 
-arrayObjects.forEach((cinema) => {
-	if (cinema.name !== '' && cinema.price !== '') {
-		console.log(cinema);
-	};
-})
+		document.body.appendChild(ul);
+	}
+});
 
-/* End 13.2 */
+let User = Object.create(employee);
 
-/* Start 13.3 */
+User.getUser();
+User.renderUser();
 
-summOfPrices = arrayObjects.reduce((summ, cinema) => {
-	let price = parseInt(cinema.price);
-
-	return summ + (isNaN(price) ? 0 : price);
-}, 0);
-
-console.log(summOfPrices);
-
-/* End 13.3 */
+/* End 14.1 */
