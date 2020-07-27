@@ -1,54 +1,31 @@
-/* Start 14.1 */
+/* Start 15.1 */
 
-let employee = {
-}
+Array.prototype.__defineGetter__('render', function render() {
+	let table = document.createElement("table"),
+		tr = document.createElement("tr"),
+		thKey = document.createElement("th");
+		thValue = document.createElement("th");
 
-Object.defineProperty(employee, 'getFirstName', {
-	value: function() {
-		if (!this.firstName) {
-			this.firstName = prompt('Please, enter the first name: ', 'Max');
-		}
-	
-		return this.firstName;
-	},
+	document.body.appendChild(table);
+	thKey.textContent = 'Key';
+	thValue.innerText = 'Value';
+	tr.appendChild(thKey);
+	table.appendChild(tr).appendChild(thValue);
+
+	this.forEach(function(value, key) {
+		let tr = document.createElement("tr"),
+			tdKey = document.createElement("td"),
+			tdValue = document.createElement("td");
+		
+		tdKey.innerText = key;
+		tdValue.innerText = value;
+		tr.appendChild(tdKey);
+		table.appendChild(tr).appendChild(tdValue);
+	});
 });
 
+let arr = [1, 2, 3];
 
-Object.defineProperty(employee, 'getLastName', {
-	value: function() {
-		if (!this.lastName) {
-			this.lastName = prompt('Please, enter the last  name: ', 'Trant');
-		};
-	
-		return this.lastName;
-	},
-});
+console.log(arr.render);
 
-Object.defineProperty(employee, 'getUser', {
-	value: function() {
-		return this.getFirstName() + " " + this.getLastName();
-	},
-	writable: true,
-});
-
-Object.defineProperty(employee, 'renderUser', {
-	value: function() {
-		let ul = document.createElement('ul');
-
-		for (let key in this) {
-			let li = document.createElement('li');
-
-			li.innerText = this[key];
-			ul.appendChild(li);
-		}
-
-		document.body.appendChild(ul);
-	}
-});
-
-let User = Object.create(employee);
-
-User.getUser();
-User.renderUser();
-
-/* End 14.1 */
+/* End 15.1 */
