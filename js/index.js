@@ -1,65 +1,45 @@
-/* Start 15.1 */
+/* Start 15.3 */
 
-Array.prototype.__defineGetter__('render', function render() {
-	let table = document.createElement("table"),
-		tr = document.createElement("tr"),
-		thKey = document.createElement("th");
-		thValue = document.createElement("th");
-
-	document.body.appendChild(table);
-	thKey.textContent = 'Key';
-	thValue.innerText = 'Value';
-	tr.appendChild(thKey);
-	table.appendChild(tr).appendChild(thValue);
-
-	this.forEach(function(value, key) {
-		let tr = document.createElement("tr"),
-			tdKey = document.createElement("td"),
-			tdValue = document.createElement("td");
-		
-		tdKey.innerText = key;
-		tdValue.innerText = value;
-		tr.appendChild(tdKey);
-		table.appendChild(tr).appendChild(tdValue);
-	});
-});
-
-let arr = [
-		1,
-		2,
-		3
+let obj = {
+		x: 10,
+		y: 20,
+		p: 15
+	},
+	operations = [
+		'+',
+		'-',
+		'*',
+		'/',
+		'%'
 	];
 
-// console.log(arr.render);
-
-/* End 15.1 */
-
-/* Start 15.2 */
-
-let data = {
-};
-
-Object.defineProperty(data, 'model', {
-	get: function() {
-		return this.symbol;
-	},
-	set: function(value) {
-		if (!this.myString) {
-			this.myString = value;
-		} else {
-			this.str = this.myString.split(value);
-			this.symbol = {
-				symbol: value,
-				count: this.myString.split(value).length - 1
+Object.defineProperty(obj, 'model', {
+	set: function(obj) {
+		for (let key in obj) {
+			if (this[key] && operations.indexOf(obj[key].operation) > -1) {
+				this[key] = eval(`${this[key]} ${obj[key].operation} ${obj[key].value};`);
+			} else if (!this[key] && operations.indexOf(obj[key].operation) > -1) {
+				this[key] = obj[key].value;
 			}
-		}
+		};
 	}
 });
 
-data.model = 'Hello, how, are you?';
-data.model = '1';
+obj.model = {
+	x: {
+		value: 33,
+		operation: '*'
+	},
+	z: {
+		value: 75,
+		operation: '+'
+	},
+	p: {
+		value: 4,
+		operation: '%'
+	}
+};
 
-console.log(data);
-console.log(data.model);
+console.log(obj);
 
-/* End 15.2 */
+/* End 15.3 */
