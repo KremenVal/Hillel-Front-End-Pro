@@ -1,65 +1,88 @@
-/* Start 15.1 */
+/* Start 18.1 */
 
-Array.prototype.__defineGetter__('render', function render() {
-	let table = document.createElement("table"),
-		tr = document.createElement("tr"),
-		thKey = document.createElement("th");
-		thValue = document.createElement("th");
+let promise = (method, json) => {
+	return new Promise((resolve, reject) => {
+		let data = new XMLHttpRequest();
 
-	document.body.appendChild(table);
-	thKey.textContent = 'Key';
-	thValue.innerText = 'Value';
-	tr.appendChild(thKey);
-	table.appendChild(tr).appendChild(thValue);
+		data.open(method, json, true);
+		data.send();
 
-	this.forEach(function(value, key) {
-		let tr = document.createElement("tr"),
-			tdKey = document.createElement("td"),
-			tdValue = document.createElement("td");
-		
-		tdKey.innerText = key;
-		tdValue.innerText = value;
-		tr.appendChild(tdKey);
-		table.appendChild(tr).appendChild(tdValue);
-	});
-});
-
-let arr = [
-		1,
-		2,
-		3
-	];
-
-// console.log(arr.render);
-
-/* End 15.1 */
-
-/* Start 15.2 */
-
-let data = {
+		data.addEventListener('readystatechange', () => {
+			if (data.readyState === 4 && data.status < 400){
+				resolve(JSON.parse(data.responseText));
+			} else if (data.status >= 400) {
+				reject();
+			}
+		});
+	})
 };
 
-Object.defineProperty(data, 'model', {
-	get: function() {
-		return this.symbol;
-	},
-	set: function(value) {
-		if (!this.myString) {
-			this.myString = value;
-		} else {
-			this.str = this.myString.split(value);
-			this.symbol = {
-				symbol: value,
-				count: this.myString.split(value).length - 1
+promise('GET', '../data1.json').then(
+	(response) => {
+		let mass1 = response.names;
+
+		promise('GET', '../data2.json').then(
+			(response) => {
+				let mass2 = response.names;
+
+				if (Array.isArray(mass1) && mass1.length) {
+					if (Array.isArray(mass2) && mass2.length) {
+						console.log(mass1.concat(mass2));
+					} else {
+						console.log(mass1);
+					}
+				} else if (Array.isArray(mass2) && mass2.length) {
+					console.log(mass2);
+				} else {
+					return warrningMessage();
+				}
+			},
+			() => {
+				if (Array.isArray(mass1) && mass1.length) {
+					console.log(mass1);
+				} else {
+					return warrningMessage();
+				}
 			}
-		}
+		)
+		.catch(
+			(message) => {
+				console.log(message);
+			}
+		)
+	},
+	() => {
+		promise('GET', '../data2.json').then(
+			(response) => {
+				let mass2 = response.names;
+
+				if (Array.isArray(mass2) && mass2.length) {
+					console.log(mass2);
+				} else {
+					return warrningMessage();
+				}
+			},
+			() => {return warrningMessage()}
+		)
+		.catch(
+			(message) => {
+				console.log(message);
+			}
+		)
 	}
-});
+)
 
-data.model = 'Hello, how, are you?';
-data.model = '1';
+function warrningMessage() {
+	return new Promise((resolve, reject) => {
+		reject('You\'ve got some problem with your files or content of files.');
+	});
+}
 
-console.log(data);
-console.log(data.model);
 
-/* End 15.2 */
+/* End 18.1 */
+
+/* Start 18.2 */
+
+
+
+/* End 18.2 */
