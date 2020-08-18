@@ -1,39 +1,49 @@
-/* Start 18.1 */
+/* Start 20.1 */
 
-async function getPromise() {
-	let promise = new Promise((resolve, reject) => {
-			setTimeout(() => resolve(getRandomInt(0, 100)), 1000)
-		}),
-		result = await promise;
-	return result;
-};
+let response = async function(url) {
+	const response = await fetch(url);
+	const json = await response.json();
 
-function afterFirstPromise(num){
-	console.log(num);
-};
+	return json;
+	},
+	json = response('https://raw.githubusercontent.com/brightestsirius/tesla/master/tesla.json');
 
-function afterSecondPromise(num){
-	console.log(num);
-};
+json.then(
+		(data) => {
+			let slideshow = $(".slideshow-container"),
+				colorPicker = $(".color-picker");
+			
+			for (let tesla in data) {
+				let text = tesla.replace('-', ' ').split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' '),
+					div = `<div class="mySlides fade" data-id-car="${colorPicker[0].childElementCount + 1}"  ${!colorPicker[0].childElementCount ? 'style="display: block"' : ''}>
+							<img src="${data[tesla]}" class="car" alt="tesla roadster ${text}">
+							<div class="text">${text}</div>
+							</div>`,
+					span = `<span class="dot ${tesla}${!colorPicker[0].childElementCount ? ' active' : ''}" data-id-color="${colorPicker[0].childElementCount + 1}"></span>`;
+				
+				slideshow.append(div);
+				colorPicker.append(span);
+			}
+		},
+		() => {
+			return reject;
+		}
+	).then(
+		() => {
+			$(".color-picker").click(function(event){
+				let element = $(event.target);
+			
+				if (!element.hasClass('active') && element.hasClass('dot')) {
+					let current = $('[class~="active"]');
+			
+					current.toggleClass('active');
+					$(`[data-id-car=${current.data('idColor')}]`).css('display', 'none');
+					$(`[data-id-car=${element.data('idColor')}]`).css('display', 'block');
+					element.toggleClass('active');
+				}
+			});
+		},
+		() => console.log('Something wrong!')
+	);
 
-function afterThirdPromise(num){
-	console.log(num);
-};
-
-function runAfter([
-	afterFirstPromise,
-	afterSecondPromise,
-	afterThirdPromise
-]){
-	getPromise().then(afterFirstPromise);
-	getPromise().then(afterSecondPromise);
-	getPromise().then(afterThirdPromise);
-};
-
-runAfter([
-	afterFirstPromise,
-	afterSecondPromise,
-	afterThirdPromise
-]);
-
-/* End 18.1 */
+/* End 20.1 */
