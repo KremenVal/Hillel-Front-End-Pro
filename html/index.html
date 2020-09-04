@@ -3,8 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Lesson 21</title>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap">
+	<title>Lesson 22</title>
 	<link rel="stylesheet" href="../style/index.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -12,121 +11,24 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-	<div class="wrapper" id="app">
-		<header class="header-container">
-			<div class="header-content">
-				<span>MSI 2020</span>
-				<div class="favourite">
-					<img class="menu" src="../images/favourite-open.png" alt="Favourite" v-on:click="headerMenu">
-					<span>Favourite</span>
-				</div>
-			</div>
-		</header>
-		<main class="main-container">
-			<div class="my-favourite">
-				<div class="jokes">
-					<div class="joke">
-						<img src="../images/heart.png" alt="Like">
-						<div class="text-joke">
-							<div class="img-msg"></div>
-							<div class="response">
-								<span class="id">ID: <span>XNaAxUduSw6zANDaIEab7A</span> <img src="../images/link.png" alt="Link"></span>
-								<p>
-									No one truly knows who's Chuck Norris' real father. No one is biologically strong enough for this. He must've conceived himself.
-								</p>
-								<span class="last-update">Last update: 1923 hours ago</span>
-								<span class="joke-category">celebrity</span>
-							</div>
-						</div>
-					</div>
-					<div class="joke">
-						<img src="../images/heart.png" alt="Like">
-						<div class="text-joke">
-							<div class="img-msg"></div>
-							<div class="response">
-								<span class="id">ID: <span>XNaAxUduSw6zANDaIEab7A</span> <img src="../images/link.png" alt="Link"></span>
-								<p>
-									No one truly knows who's Chuck Norris' real father. No one is biologically strong enough for this. He must've conceived himself.
-								</p>
-								<span class="last-update">Last update: 1923 hours ago</span>
-								<span class="joke-category">celebrity</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="title">
-				<h1>Hey!</h1>
-				<span>Let’s try to find a joke for you:</span>
-			</div>
-			<form class="form-joke" v-on:submit.prevent="getJokes">
-				<div class="choice">
-					<label for="random">
-						<span>Random</span>
-						<input type="radio" name="choice" id="random" value="random" v-on:click="getGenerator" checked>
-					</label>
-					<label for="from-categories">
-						<span>From categories</span>
-						<input type="radio" name="choice" id="from-categories" value="categories" v-on:click="getGenerator">
-					</label>
-					<div class="categories">
-						<label v-for="category in categories" :for="category">
-							<span>{{ category }}</span>
-							<input type="radio" name="category" :id="category" disabled v-on:change="changeCategory" :value="category">
-						</label>
-					</div>
-					<label for="search">
-						<span>Search</span>
-						<input type="radio" name="choice" id="search" value="search" v-on:click="getGenerator">
-					</label>
-					<input type="text" name="search-radio" placeholder="Free text search..." v-model="searchValue">
-				</div>
-				<button type="submit" class="get"><span>Get a joke</span></button>
-			</form>
-			<div class="jokes">
-				<div v-for="(joke, index) in jokes" class="joke">
-					<a v-on:click.once="addFavourite"><img :data-id="index" class="like" src="../images/empty-heart.png" alt="Like"></a>
-					<div class="text-joke">
-						<div class="img-msg" v-bind:style="{backgroundImage: 'url(' + joke.icon_url + ')'}"></div>
-						<div class="response">
-						<span class="id">ID: <span>{{ joke.id }}</span> <a v-bind:href="joke.url"><img src="../images/link.png" alt="Link"></a></span>
-						<p>
-							{{ joke.value }}
-						</p>
-						<div>
-							<span class="last-update">{{ joke.updated_at }}</span>
-							<div v-if="joke.categories.length" class="array-categories">
-								<span v-for="category in joke.categories" class="joke-category">{{ category }}</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</main>
-		<div class="my-favourite" v-on:click="closeMenu">
-			<div>
-				<div class="jokes">
-					<div v-for="(savedJoke, count) in savedJokes" class="joke">
-						<a v-on:click="deleteJoke"><img :data-save-id="count" class="like" src="../images/heart.png" alt="Like"></a>
-						<div class="text-joke">
-							<div class="img-msg" v-bind:style="{backgroundImage: 'url(' + savedJoke.icon_url + ')'}"></div>
-							<div class="response">
-							<span class="id">ID: <span>{{ savedJoke.id }}</span> <a v-bind:href="savedJoke.url"><img src="../images/link.png" alt="Link"></a></span>
-							<p>
-								{{ savedJoke.value }}
-							</p>
-							<div>
-								<span class="last-update">{{ savedJoke.updated_at }}</span>
-								<div v-if="savedJoke.categories.length" class="array-categories">
-									<span v-for="category in savedJoke.categories" class="joke-category">{{ category }}</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<main id="app">
+		<form class="need-to-do" v-on:submit.prevent="transfer">
+			<ul>
+				<li>Task 1</li>
+				<li>Task 2</li>
+				<li>Task 3</li>
+			</ul>
+			<button type="submit">Transfer</button>
+		</form>
+		<form class="done" v-on:submit.prevent="transfer">
+			<ul>
+				<li>Task 4</li>
+				<li>Task 5</li>
+				<li>Task 6</li>
+			</ul>
+			<button type="submit">Transfer</button>
+		</form>
+	</main>
 	<script src="../js/index.js"></script>
 	<script src="../js/vue.js"></script>
 </body>
