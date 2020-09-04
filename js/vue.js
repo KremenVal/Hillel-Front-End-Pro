@@ -9,9 +9,9 @@ let app = new Vue({
 			let ul = $(event.target).children().first();
 
 			if ($(event.target).hasClass('need-to-do') && ul.children().length) {
-				$('.done ul').append(ul.children().last());
+				$('.done ul').prepend(ul.children().last());
 			} else {
-				$('.need-to-do ul').append(ul.children().last());
+				$('.need-to-do ul').prepend(ul.children().last());
 			}
 		}
 	}
