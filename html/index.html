@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Lesson 22-2</title>
+	<title>Lesson 23</title>
 	<link rel="stylesheet" href="../style/index.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -12,15 +12,12 @@
 </head>
 <body>
 	<main id="app">
-		<form :data-id="index" v-on:submit.prevent="transfer" v-for="(lists, index) in allList">
-			<ul>
-				<li v-for="list in lists">{{ list }}</li>
-			</ul>
-			<button type="submit">Transfer</button>
-			<input type="checkbox" name="check" id="check">
-		</form>
+		<div class="box" v-for="(color, index) in colors">
+			<div :class="color" :style="{height: heights[index] + 'px'}"></div>
+			<input type="range" v-on:input="changeSize" :value="range[index]">
+		</div>
 	</main>
-	<script src="../js/index.js"></script>
+	<script src="../js/library.js"></script>
 	<script src="../js/vue.js"></script>
 </body>
 </html>

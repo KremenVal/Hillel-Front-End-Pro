@@ -17,22 +17,49 @@ body {
 
 main {
   display: flex;
+}
+
+.box {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 320px;
 }
 
-ul {
-  border: 1px solid #000;
+.box:not(:last-child) {
+  margin-right: 10px;
 }
 
-ul:not(:last-child) {
+.box div {
+  width: 129px;
   margin-bottom: 20px;
 }
 
-form {
-  margin-bottom: 20px;
+.red {
+  background: red;
 }
 
-li {
-  padding: 5px;
-  list-style: none;
+.blue {
+  background: blue;
+}
+
+.green {
+  background: green;
+}
+
+.black {
+  background: black;
+}
+
+.orange {
+  background: orange;
+}
+
+.brown {
+  background: brown;
+}
+
+.pink {
+  background: pink;
 }

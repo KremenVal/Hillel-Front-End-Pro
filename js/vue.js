@@ -1,28 +1,30 @@
 let app = new Vue({
 	el: '#app',
-	data: {	
-		allList: [
-			[1, 2, 3],
-			[4, 5, 6],
-			[7, 8, 9],
-			[10, 11, 12]
+	data: {
+		heights: [],
+		range: [],
+		colors: [
+			'red',
+			'blue',
+			'green',
+			'black',
+			'orange',
+			'brown',
+			'pink'
 		]
 	},
+	mounted() {
+		for (let i = 0; i < 7; i++) {
+			this.heights.push(getRandomInt(100, 300));
+			this.range.push(Math.round((this.heights[i] / 300) * 100));
+		}
+	},
 	methods: {
-		transfer: function(event) {
-			event.preventDefault();
+		changeSize: function(event) {
+			let box = $(event.target).prev(),
+				height = 300 * ($(event.target).val() / 100);
 
-			let curentFormUl = $(event.target).children().first()
-				formNext = $(event.target).next(),
-				formNextUl = formNext.children().first(),
-				formPrev = $(event.target).prev(),
-				formPrevUl = formPrev.children().first();
-
-			if (formNext.length && $(event.target).children().last().prop('checked')) {
-				formNextUl.prepend(curentFormUl.children().last());
-			} else if (formPrev.length && !$(event.target).children().last().prop('checked')) {
-				formPrevUl.prepend(curentFormUl.children().last());
-			}
+			box.css('height', height);
 		}
 	}
 });
