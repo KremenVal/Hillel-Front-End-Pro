@@ -11,22 +11,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-	<main id="app" v-for="(lists, index) in allList">
-		<form :data-id="index" v-on:submit.prevent="transfer">
-			{{ index }}
-			<!-- <ul v-for="list in lists">
-				<li>{{ list }}</li>
-			</ul> -->
-			<button type="submit">Transfer</button>
-		</form>
-		<!-- <form class="done" v-on:submit.prevent="transfer">
+	<main id="app">
+		<form :data-id="index" v-on:submit.prevent="transfer" v-for="(lists, index) in allList">
 			<ul>
-				<li>Task 4</li>
-				<li>Task 5</li>
-				<li>Task 6</li>
+				<li v-for="list in lists">{{ list }}</li>
 			</ul>
 			<button type="submit">Transfer</button>
-		</form> -->
+			<input type="checkbox" name="check" id="check">
+		</form>
 	</main>
 	<script src="../js/index.js"></script>
 	<script src="../js/vue.js"></script>

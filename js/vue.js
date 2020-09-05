@@ -11,12 +11,17 @@ let app = new Vue({
 	methods: {
 		transfer: function(event) {
 			event.preventDefault();
-			let ul = $(event.target).children().first();
 
-			if ($(event.target).hasClass('need-to-do') && ul.children().length) {
-				$('.done ul').prepend(ul.children().last());
-			} else {
-				$('.need-to-do ul').prepend(ul.children().last());
+			let curentFormUl = $(event.target).children().first()
+				formNext = $(event.target).next(),
+				formNextUl = formNext.children().first(),
+				formPrev = $(event.target).prev(),
+				formPrevUl = formPrev.children().first();
+
+			if (formNext.length && $(event.target).children().last().prop('checked')) {
+				formNextUl.prepend(curentFormUl.children().last());
+			} else if (formPrev.length && !$(event.target).children().last().prop('checked')) {
+				formPrevUl.prepend(curentFormUl.children().last());
 			}
 		}
 	}
