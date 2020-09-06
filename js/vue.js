@@ -67,8 +67,8 @@ let app = new Vue({
 		setUrl: function() {
 			if (this.generator === 'random') {
 				return this.url + this.generator;
-			} else if (this.generator === 'from-categories') {
-				return this.url + `random/?category=${this.category}`;
+			} else if (this.generator === 'categories') {
+				return this.url + `random?category=${this.category}`;
 			} else if (this.generator === 'search') {
 				return this.url + `search?query=${this.searchValue}`;
 			}
